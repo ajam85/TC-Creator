@@ -1,0 +1,547 @@
+/* ═══════════════════════════════════════
+   TC CREATOR — i18n.js
+   Slovník překladů CZ / EN
+═══════════════════════════════════════ */
+
+const I18N = {
+  cs: {
+    /* topbar */
+    app_title: 'TC Creator',
+    btn_new: 'Nový projekt',
+    btn_new_title: 'Nový projekt',
+    btn_open: 'Otevřít',
+    btn_open_title: 'Otevřít projekt',
+    btn_export: 'Export',
+    btn_export_title: 'Exportovat (CSV / XLSX / JSON)',
+    btn_export_csv: 'Export CSV',
+    btn_export_csv_title: 'Exportovat do CSV',
+    btn_export_json: 'Export JSON',
+    btn_export_json_title: 'Exportovat do JSON (záloha)',
+    btn_save: 'Uložit',
+    btn_save_title: 'Uložit projekt (záloha JSON)',
+    btn_export_xlsx: 'Export XLSX',
+    btn_export_xlsx_title: 'Exportovat do Excel sešitu (s dropdown menu pro Výsledek testu)',
+    mc_format_xlsx_title: 'XLSX (Excel — doporučeno)',
+    mc_format_xlsx_desc: 'Plnohodnotný Excel sešit s automatickým dropdown menu pro Výsledek testu, zalamováním textu a formátováním hlavičky.',
+    mc_result_col: 'Výsledek testu',
+    mc_result_not_tested: 'Netestováno',
+    mc_result_error: 'Chyba',
+    mc_result_success: 'Úspěch',
+    mc_result_blocked: 'Nemohl být proveden',
+    btn_find_replace: 'Najít a nahradit',
+    btn_find_replace_title: 'Hromadně najít a nahradit text ve vybraných polích',
+    autosave_saved: 'Uloženo',
+    admin_title: 'Administrátorský mód',
+    theme_title: 'Přepnout téma',
+    about_title: 'O aplikaci',
+    settings_title: 'Nastavení',
+    settings_silent_backup: 'Tiché automatické zálohy',
+    settings_silent_backup_hint: 'Každých 5 minut (pokud je rozpracováno) se na pozadí vytvoří záloha do složky ".tc_backups" vedle projektu — bez dialogu. Uchovává se posledních 5 záloh, starší se automaticky mažou.',
+    lang_title: 'Přepnout jazyk',
+
+    /* project bar */
+    pb_project: 'Projekt',
+    pb_name_placeholder: 'Název projektu',
+    pb_name_readonly_title: 'Název lze upravit pouze v administrátorském módu',
+    pb_prefix: 'Prefix',
+    pb_prefix_readonly_title: 'Prefix lze upravit pouze v administrátorském módu — změna se promítne do všech test casů',
+    pb_prefix_apply: 'Použít prefix',
+    pb_renumber: 'Přečíslovat po smazání',
+    pb_renumber_order: 'Přečíslovat podle pořadí',
+    pb_renumber_order_title: 'Přečísluje ID všech TC podle jejich aktuálního pořadí v seznamu (podle drag & drop pozice). Využitelné hlavně při tvorbě nových celkových TC.',
+    pb_renumber_order_confirm: 'Opravdu přečíslovat ID všech TC podle aktuálního pořadí v seznamu? Tuto akci nelze vrátit zpět.',
+    pb_renumber_title: 'Po smazání TC přečíslovat zbývající',
+
+    /* empty state */
+    empty_state_text: 'Vytvořte nový projekt nebo otevřete existující',
+
+    /* tabulka header */
+    th_id: 'ID TC',
+    th_name: 'Název TC',
+    th_priority: 'Priorita',
+    th_status: 'Stav',
+
+    /* add tc */
+    add_tc: 'Přidat test case',
+    add_step: 'Přidat krok',
+    add_result: 'Přidat výsledek',
+
+    /* tc row */
+    tc_no_name: '(bez názvu)',
+    tc_lock: 'Odemknout',
+    tc_unlock: 'Zamknout',
+    tc_deleted_title: 'Smazáno',
+    dup_warning_title: 'Duplicitní ID — existuje vícekrát v projektu',
+
+    /* priority / status labels */
+    priority_high: 'Vysoká',
+    priority_medium: 'Střední',
+    priority_low: 'Nízká',
+    status_draft: 'Návrh',
+    status_ready: 'Připraven',
+    status_deprecated: 'Zastaralý',
+
+    /* form */
+    f_name: 'Název',
+    f_name_placeholder: 'Název test casu',
+    f_goal: 'Cíl',
+    f_goal_placeholder: 'Stručný popis předmětu testu',
+    f_preconditions: 'Předpoklady (preconditions)',
+    f_preconditions_placeholder: 'Co musí platit před spuštěním testu',
+    f_test_data: 'Testovací data',
+    f_test_data_placeholder: 'Konkrétní data použitá při testu',
+    f_priority: 'Priorita',
+    f_status: 'Stav',
+    f_notes: 'Poznámky',
+    f_notes_placeholder: 'Poznámka…',
+    f_notes_title: 'Interní poznámka k TC',
+    f_tags: 'Štítky',
+    tag_remove_title: 'Odebrat štítek',
+    tag_pick_existing: '— přiřadit existující štítek —',
+    tag_none_available: '— žádné další štítky k přiřazení —',
+    tag_new_placeholder: 'Nový štítek…',
+    tag_create_btn: 'Vytvořit',
+    btn_manage_tags: 'Štítky',
+    btn_manage_tags_title: 'Správa štítků (společné pro všechny projekty)',
+    tags_modal_title: 'Správa štítků',
+    tags_modal_hint: 'Štítky jsou společné pro všechny projekty. Smazáním štítku ho odebereš i ze všech TC v aktuálně otevřeném projektu.',
+    tags_modal_empty: 'Zatím žádné štítky. Vytvoř první níže.',
+    tag_delete_everywhere_title: 'Smazat štítek úplně (odebere se i ze všech TC v otevřeném projektu)',
+    tag_color_title: 'Barva štítku',
+    copy_field_title: 'Kopírovat obsah pole',
+    f_parent: 'Rodič (zdědit kroky a předpoklady)',
+    f_parent_none: '— bez rodiče —',
+    f_parent_warn: 'Rodič je smazán',
+    f_steps: 'Kroky',
+    f_steps_inherited_from: '↳ Zděděno z',
+    f_steps_own: '↳ Vlastní kroky',
+    f_preconditions_inherited_from: '↳ Zděděné předpoklady z',
+    f_preconditions_own: '↳ Vlastní předpoklady',
+    step_inherited_title: 'Zděděný krok — lze lokálně přepsat (rodič zůstane nezměněn)',
+    step_overridden_title: 'Krok lokálně přepsán — klikněte na ↺ pro obnovení původní hodnoty',
+    step_reset_title: 'Obnovit původní zděděnou hodnotu',
+    step_delete_title: 'Lokálně smazat tento zděděný krok (rodiče neovlivní)',
+    step_restore_title: 'Obnovit smazaný zděděný krok',
+    step_deleted_title: 'Zděděný krok lokálně smazán — rodič zůstává nezměněn',
+    f_step_placeholder: 'Krok',
+    f_expected_result: 'Očekávaný výsledek',
+    f_er_placeholder: 'Očekávaný výsledek',
+    f_step_test_data_label: 'Testovací data k tomuto kroku',
+    f_step_test_data_placeholder: 'Testovací data',
+    step_label_short: 'krok',
+    f_step_remove: 'Odebrat krok',
+    step_insert_title: 'Vložit krok sem',
+    f_result_remove: 'Odebrat',
+    tc_export_check_title: 'Zahrnout do výběru při exportu',
+    tc_move_up_title: 'Posunout nahoru',
+    tc_move_down_title: 'Posunout dolů',
+
+    /* form actions */
+    act_delete: 'Smazat',
+    act_restore: 'Obnovit',
+    act_copy: 'Kopírovat',
+    copy_settings_title: 'Co se má kopírovat',
+    copy_settings_hint: 'ID test casu se kopíruje vždy. Vyberte, které další části se mají zahrnout do textu při kliknutí na "Kopírovat".',
+    copy_field_name: 'Název',
+    copy_field_goal: 'Cíl',
+    copy_field_preconditions: 'Předpoklady',
+    copy_field_test_data: 'Testovací data',
+    copy_field_steps: 'Kroky',
+    copy_field_steps_expected: 'Očekávaný výsledek kroku',
+    copy_field_expected_result: 'Očekávaný výsledek (celkový)',
+    act_version: 'Nová verze',
+    act_save_lock: 'Uložit',
+    act_save_lock_title: 'Zamknout a zabalit tento test case',
+
+    /* admin zone */
+    admin_zone_label: 'Administrátorský mód — nebezpečné akce',
+    admin_id_label: 'Upravit číslo (prefix „{prefix}" se měnit nebude)',
+    admin_id_save: 'Uložit číslo',
+    admin_hard_delete: 'Trvale smazat (bez obnovení)',
+
+    /* modal: new project */
+    mn_title: 'Nový projekt',
+    mn_name_label: 'Název projektu',
+    mn_name_placeholder: 'např. Login modul',
+    mn_prefix_label: 'Prefix ID',
+    mn_prefix_placeholder: 'např. LOGIN',
+    mn_prefix_hint: 'Max 24 znaků, pouze písmena, číslice, _ a -',
+    mn_renumber: 'Přečíslovat TC po smazání',
+    btn_cancel: 'Zrušit',
+    btn_create: 'Vytvořit',
+
+    /* modal: version */
+    mv_title: 'Nová verze TC',
+    mv_text: 'Původní TC bude označen jako smazaný a zůstane jako reference.<br>Pod ním bude vytvořena nová verze se zkopírovaným obsahem.',
+    btn_create_version: 'Vytvořit verzi',
+
+    /* modal: csv export */
+    mc_title: 'Export do CSV',
+    mc_select_label: 'Test casy k exportu',
+    mc_select_all: 'Vybrat vše',
+    mc_select_none: 'Zrušit výběr',
+    mc_select_count: 'Vybráno {n} z {total}',
+    mc_format_label: 'Formát kroků a výsledků v buňce',
+    mc_columns_label: 'Kategorie k exportu',
+    mc_col_priority: 'Priorita',
+    mc_col_goal: 'Cíl',
+    mc_col_preconditions: 'Předpoklady',
+    mc_col_test_data: 'Testovací data',
+    mc_col_steps: 'Kroky',
+    mc_col_steps_expected: 'Očekávaný výsledek kroku',
+    mc_col_expected_result: 'Očekávaný výsledek (celkový)',
+    mc_col_notes: 'Poznámky',
+    mc_col_tags: 'Štítky',
+    mc_format_multiline_title: 'Víceřádkové (doporučeno)',
+    mc_format_multiline_desc: 'Každý krok je zobrazen na samostatném řádku uvnitř buňky. Po správném importu (viz nápověda níže) je zobrazení v Excelu čisté a přehledné. Při pouhém otevření souboru se však může obsah buňky rozdělit na více řádků.',
+    mc_format_pipe_title: 'Jednořádkové (oddělené „ | ")',
+    mc_format_pipe_desc: 'Všechny kroky jsou uvedeny za sebou v jedné řádce. Zobrazení je správné i při pouhém otevření souboru, je však méně přehledné.',
+    mc_format_json_title: 'JSON (vybrané TC)',
+    mc_format_json_desc: 'Exportuje vybrané test casy jako JSON soubor ve stejné struktuře jako projekt (bez smazaných TC).',
+    mc_json_flatten: 'Sloučit zděděné kroky a předpoklady do vlastních (pro trvale samostatný soubor bez závislosti na rodiči)',
+    mc_help_title: 'Postup importu do Excelu',
+    mc_help_1: 'Otevřete prázdný sešit Excel (nikoli dvojklikem na CSV soubor)',
+    mc_help_2: 'Vyberte záložku <strong>Data → Z textu/CSV</strong> (Get Data → From Text/CSV)',
+    mc_help_3: 'Vyberte exportovaný soubor a potvrďte volbu <strong>Import</strong>',
+    mc_help_4: 'V náhledu importu ověřte, že je zaškrtnuta možnost <strong>„Použít první řádek jako záhlaví"</strong>',
+    mc_help_5: 'Vyberte sloupce Kroky a Očekávaný výsledek, poté na záložce <strong>Domů</strong> zvolte <strong>Zalamovat text</strong>',
+    btn_export: 'Exportovat',
+    csv_empty: 'Žádné test casy k exportu',
+
+    /* modal: hard delete */
+    hd_title: 'Trvale smazat test case',
+    hd_text: 'Tato akce je nevratná. Test case bude z projektu zcela odstraněn, bez možnosti obnovení ani v záloze JSON.',
+    hd_confirm_label: 'Pro potvrzení napište ID test casu:',
+    hd_confirm_placeholder: 'Zadejte ID',
+    btn_hard_delete: 'Trvale smazat',
+
+    /* modal: about */
+    about_version_label: 'Verze',
+    about_ai_note: 'Tato aplikace byla vytvořena ve spolupráci s modelem <strong>Claude Sonnet 4.6</strong> od Anthropic, který se podílel na návrhu i implementaci.',
+    about_changelog_title_210: 'Verze 2.1.0',
+    about_changelog_list_210: '<li>Nový TC převezme název z předchozího TC v seznamu (rychlejší zadávání navazujících TC)</li><li>Export vybraných TC do JSON: volba "sloučit zděděné kroky/předpoklady do vlastních" pro trvale samostatný soubor</li><li>Barvy štítků se ukládají přímo do JSON projektu (project.tagColors), aby seděly i v jiných nástrojích (např. TC Runner)</li><li>Tiché automatické zálohy na pozadí (rotace posledních 5) + přepínač v novém okně Nastavení</li><li>Verzované ruční ukládání ("Uložit" navrhne _v1, _v2, ... místo přepisování)</li><li>Opravené zalomení dlouhých popisků u checkboxů v modalech</li><li>Odstraněna nezobrazující se ikona programu (UI, okno i instalátor)</li>',
+    about_changelog_title_200: 'Verze 2.0.0',
+    about_changelog_list_200: '<li>Kroky mají vlastní Očekávaný výsledek a Testovací data (vedle samostatného celkového seznamu)</li><li>Vložení kroku mezi existující — i doprostřed zděděných kroků</li><li>Opravené vícestupňové dědění kroků a předpokladů napříč řetězcem rodičů</li><li>Štítky (barevné, sdílené napříč projekty) + samostatná správa štítků</li><li>Poznámky u TC s červeným zvýrazněním</li><li>Přesun TC v seznamu nahoru/dolů a přečíslování podle pořadí (admin mód)</li><li>Sloučený export CSV/XLSX/JSON s výběrem kategorií a TC</li><li>Kopírování jednotlivých polí do schránky, konfigurovatelné kopírování celého TC</li><li>Responzivní rozložení, opravené trvalé smazání</li>',
+    btn_close: 'Zavřít',
+
+    /* csv export headers */
+    csv_h_id: 'ID',
+    csv_h_name: 'Název',
+    csv_h_goal: 'Cíl',
+    csv_h_preconditions: 'Předpoklady',
+    csv_h_test_data: 'Testovací data',
+    csv_h_steps: 'Kroky',
+    csv_h_expected_result: 'Očekávaný výsledek',
+    csv_h_notes: 'Poznámky',
+    csv_h_tags: 'Štítky',
+    csv_h_steps_expected: 'Očekávaný výsledek kroku',
+    csv_h_priority: 'Priorita',
+    csv_h_status: 'Stav',
+
+    /* find & replace */
+    fr_title: 'Najít a nahradit',
+    fr_find_label: 'Najít',
+    fr_find_placeholder: 'Text k vyhledání',
+    fr_replace_label: 'Nahradit za',
+    fr_replace_placeholder: 'Náhradní text',
+    fr_case_sensitive: 'Rozlišovat velikost písmen',
+    fr_fields_label: 'Hledat v polích',
+    fr_search_btn: 'Najít výskyty',
+    fr_confirm_btn: 'Nahradit vše',
+    fr_no_results: 'Žádné výskyty nenalezeny',
+    fr_results_count: 'Nalezeno {n} výskytů v {tc} test casech',
+    fr_done: 'Nahrazeno {n} výskytů',
+
+    /* clipboard copy */
+    clip_id: 'ID',
+    clip_name: 'Název',
+    clip_goal: 'Cíl',
+    clip_preconditions: 'Předpoklady',
+    clip_steps: 'Kroky:',
+    clip_expected_result: 'Očekávaný výsledek:',
+
+    /* version modal info */
+    mv_info: '{id} bude označen jako smazaný<br>Nová verze: {newId}'
+  },
+
+  en: {
+    /* topbar */
+    app_title: 'TC Creator',
+    btn_new: 'New project',
+    btn_new_title: 'New project',
+    btn_open: 'Open',
+    btn_open_title: 'Open project',
+    btn_export: 'Export',
+    btn_export_title: 'Export (CSV / XLSX / JSON)',
+    btn_export_csv: 'Export CSV',
+    btn_export_csv_title: 'Export to CSV',
+    btn_export_json: 'Export JSON',
+    btn_export_json_title: 'Export to JSON (backup)',
+    btn_save: 'Save',
+    btn_save_title: 'Save project (JSON backup)',
+    btn_export_xlsx: 'Export XLSX',
+    btn_export_xlsx_title: 'Export to Excel workbook (with dropdown menu for Test result)',
+    mc_format_xlsx_title: 'XLSX (Excel — recommended)',
+    mc_format_xlsx_desc: 'Full Excel workbook with automatic dropdown menu for Test result, text wrapping and header formatting.',
+    mc_result_col: 'Test result',
+    mc_result_not_tested: 'Not tested',
+    mc_result_error: 'Error',
+    mc_result_success: 'Success',
+    mc_result_blocked: 'Could not be executed',
+    btn_find_replace: 'Find and replace',
+    btn_find_replace_title: 'Bulk find and replace text across selected fields',
+    autosave_saved: 'Saved',
+    admin_title: 'Administrator mode',
+    theme_title: 'Toggle theme',
+    about_title: 'About',
+    settings_title: 'Settings',
+    settings_silent_backup: 'Silent automatic backups',
+    settings_silent_backup_hint: 'Every 5 minutes (if there are unsaved changes), a backup is silently written to a ".tc_backups" folder next to the project — no dialog. The last 5 backups are kept, older ones are deleted automatically.',
+    lang_title: 'Switch language',
+
+    /* project bar */
+    pb_project: 'Project',
+    pb_name_placeholder: 'Project name',
+    pb_name_readonly_title: 'Name can only be edited in administrator mode',
+    pb_prefix: 'Prefix',
+    pb_prefix_readonly_title: 'Prefix can only be edited in administrator mode — the change will apply to all test cases',
+    pb_prefix_apply: 'Apply prefix',
+    pb_renumber: 'Renumber after deletion',
+    pb_renumber_order: 'Renumber by order',
+    pb_renumber_order_title: 'Renumbers the IDs of all TCs according to their current order in the list (drag & drop position). Mainly useful when creating a new full set of TCs.',
+    pb_renumber_order_confirm: 'Really renumber the IDs of all TCs according to their current order in the list? This action cannot be undone.',
+    pb_renumber_title: 'Renumber remaining test cases after deletion',
+
+    /* empty state */
+    empty_state_text: 'Create a new project or open an existing one',
+
+    /* tabulka header */
+    th_id: 'TC ID',
+    th_name: 'TC Name',
+    th_priority: 'Priority',
+    th_status: 'Status',
+
+    /* add tc */
+    add_tc: 'Add test case',
+    add_step: 'Add step',
+    add_result: 'Add result',
+
+    /* tc row */
+    tc_no_name: '(unnamed)',
+    tc_lock: 'Unlock',
+    tc_unlock: 'Lock',
+    tc_deleted_title: 'Deleted',
+    dup_warning_title: 'Duplicate ID — appears more than once in the project',
+
+    /* priority / status labels */
+    priority_high: 'High',
+    priority_medium: 'Medium',
+    priority_low: 'Low',
+    status_draft: 'Draft',
+    status_ready: 'Ready',
+    status_deprecated: 'Deprecated',
+
+    /* form */
+    f_name: 'Name',
+    f_name_placeholder: 'Test case name',
+    f_goal: 'Goal',
+    f_goal_placeholder: 'Brief description of what is being tested',
+    f_preconditions: 'Preconditions',
+    f_preconditions_placeholder: 'What must be true before running the test',
+    f_test_data: 'Test data',
+    f_test_data_placeholder: 'Specific data used during the test',
+    f_priority: 'Priority',
+    f_status: 'Status',
+    f_notes: 'Notes',
+    f_notes_placeholder: 'Note…',
+    f_notes_title: 'Internal note for this TC',
+    f_tags: 'Tags',
+    tag_remove_title: 'Remove tag',
+    tag_pick_existing: '— assign an existing tag —',
+    tag_none_available: '— no more tags to assign —',
+    tag_new_placeholder: 'New tag…',
+    tag_create_btn: 'Create',
+    btn_manage_tags: 'Tags',
+    btn_manage_tags_title: 'Manage tags (shared across all projects)',
+    tags_modal_title: 'Manage tags',
+    tags_modal_hint: 'Tags are shared across all projects. Deleting a tag also removes it from every TC in the currently open project.',
+    tags_modal_empty: 'No tags yet. Create the first one below.',
+    tag_delete_everywhere_title: 'Delete this tag entirely (also removes it from every TC in the open project)',
+    tag_color_title: 'Tag color',
+    copy_field_title: 'Copy field content',
+    f_parent: 'Parent (inherit steps and preconditions)',
+    f_parent_none: '— no parent —',
+    f_parent_warn: 'Parent is deleted',
+    f_steps: 'Steps',
+    f_steps_inherited_from: '↳ Inherited from',
+    f_steps_own: '↳ Own steps',
+    f_preconditions_inherited_from: '↳ Inherited preconditions from',
+    f_preconditions_own: '↳ Own preconditions',
+    step_inherited_title: 'Inherited step — can be locally overridden (parent stays unchanged)',
+    step_overridden_title: 'Step locally overridden — click ↺ to restore original value',
+    step_reset_title: 'Restore original inherited value',
+    step_delete_title: 'Locally delete this inherited step (parent stays unchanged)',
+    step_restore_title: 'Restore deleted inherited step',
+    step_deleted_title: 'Inherited step locally deleted — parent stays unchanged',
+    f_step_placeholder: 'Step',
+    f_expected_result: 'Expected result',
+    f_er_placeholder: 'Expected result',
+    f_step_test_data_label: 'Test data for this step',
+    f_step_test_data_placeholder: 'Test data',
+    step_label_short: 'step',
+    f_step_remove: 'Remove step',
+    step_insert_title: 'Insert step here',
+    f_result_remove: 'Remove',
+    tc_export_check_title: 'Include in export selection',
+    tc_move_up_title: 'Move up',
+    tc_move_down_title: 'Move down',
+
+    /* form actions */
+    act_delete: 'Delete',
+    act_restore: 'Restore',
+    act_copy: 'Copy',
+    copy_settings_title: 'What to copy',
+    copy_settings_hint: 'The TC ID is always copied. Choose which additional parts to include in the text when clicking "Copy".',
+    copy_field_name: 'Name',
+    copy_field_goal: 'Goal',
+    copy_field_preconditions: 'Preconditions',
+    copy_field_test_data: 'Test data',
+    copy_field_steps: 'Steps',
+    copy_field_steps_expected: 'Step expected result',
+    copy_field_expected_result: 'Expected result (overall)',
+    act_version: 'New version',
+    act_save_lock: 'Save',
+    act_save_lock_title: 'Lock and collapse this test case',
+
+    /* admin zone */
+    admin_zone_label: 'Administrator mode — dangerous actions',
+    admin_id_label: 'Edit number (prefix "{prefix}" will not change)',
+    admin_id_save: 'Save number',
+    admin_hard_delete: 'Permanently delete (no recovery)',
+
+    /* modal: new project */
+    mn_title: 'New project',
+    mn_name_label: 'Project name',
+    mn_name_placeholder: 'e.g. Login module',
+    mn_prefix_label: 'ID prefix',
+    mn_prefix_placeholder: 'e.g. LOGIN',
+    mn_prefix_hint: 'Max 24 characters, letters, digits, _ and - only',
+    mn_renumber: 'Renumber test cases after deletion',
+    btn_cancel: 'Cancel',
+    btn_create: 'Create',
+
+    /* modal: version */
+    mv_title: 'New TC version',
+    mv_text: 'The original TC will be marked as deleted and kept as a reference.<br>A new version with copied content will be created below it.',
+    btn_create_version: 'Create version',
+
+    /* modal: csv export */
+    mc_title: 'Export to CSV',
+    mc_select_label: 'Test cases to export',
+    mc_select_all: 'Select all',
+    mc_select_none: 'Clear selection',
+    mc_select_count: '{n} of {total} selected',
+    mc_format_label: 'Format of steps and results within a cell',
+    mc_columns_label: 'Categories to export',
+    mc_col_priority: 'Priority',
+    mc_col_goal: 'Goal',
+    mc_col_preconditions: 'Preconditions',
+    mc_col_test_data: 'Test data',
+    mc_col_steps: 'Steps',
+    mc_col_steps_expected: 'Step expected result',
+    mc_col_expected_result: 'Expected result (overall)',
+    mc_col_notes: 'Notes',
+    mc_col_tags: 'Tags',
+    mc_format_multiline_title: 'Multi-line (recommended)',
+    mc_format_multiline_desc: 'Each step is shown on its own line within the cell. After a proper import (see instructions below) the display in Excel is clean and readable. Simply opening the file, however, may split the cell content across multiple rows.',
+    mc_format_pipe_title: 'Single-line (separated by " | ")',
+    mc_format_pipe_desc: 'All steps are listed one after another on a single line. Display is correct even when simply opening the file, but it is less readable.',
+    mc_format_json_title: 'JSON (selected TCs)',
+    mc_format_json_desc: 'Exports the selected test cases as a JSON file in the same structure as the project (excluding deleted TCs).',
+    mc_json_flatten: 'Flatten inherited steps and preconditions into own values (for a permanently standalone file with no dependency on the parent)',
+    mc_help_title: 'How to import into Excel',
+    mc_help_1: 'Open a blank Excel workbook (do not double-click the CSV file)',
+    mc_help_2: 'Go to <strong>Data → From Text/CSV</strong>',
+    mc_help_3: 'Select the exported file and confirm <strong>Import</strong>',
+    mc_help_4: 'In the import preview, make sure <strong>"Use first row as headers"</strong> is checked',
+    mc_help_5: 'Select the Steps and Expected Result columns, then on the <strong>Home</strong> tab choose <strong>Wrap Text</strong>',
+    btn_export: 'Export',
+    csv_empty: 'No test cases to export',
+
+    /* modal: hard delete */
+    hd_title: 'Permanently delete test case',
+    hd_text: 'This action cannot be undone. The test case will be completely removed from the project, with no way to recover it, even from the JSON backup.',
+    hd_confirm_label: 'To confirm, type the test case ID:',
+    hd_confirm_placeholder: 'Enter ID',
+    btn_hard_delete: 'Delete permanently',
+
+    /* modal: about */
+    about_version_label: 'Version',
+    about_ai_note: 'This application was built in collaboration with <strong>Claude Sonnet 4.6</strong> by Anthropic, which contributed to both design and implementation.',
+    about_changelog_title_210: 'Version 2.1.0',
+    about_changelog_list_210: '<li>A new TC now inherits its name from the previous TC in the list (faster entry for consecutively-named TCs)</li><li>Export of selected TCs to JSON: "flatten inherited steps/preconditions into own values" option for a permanently standalone file</li><li>Tag colors are now saved directly into the project JSON (project.tagColors) so they match in other tools (e.g. TC Runner)</li><li>Silent background backups (rotating last 5) + toggle in the new Settings window</li><li>Versioned manual saving ("Save" suggests _v1, _v2, ... instead of overwriting)</li><li>Fixed text wrapping for long checkbox labels in modals</li><li>Removed the non-displaying app icon (UI, window, and installer)</li>',
+    about_changelog_title_200: 'Version 2.0.0',
+    about_changelog_list_200: '<li>Steps now have their own Expected Result and Test Data (alongside the separate overall list)</li><li>Insert a step between existing ones — even in the middle of inherited steps</li><li>Fixed multi-level inheritance of steps and preconditions across the parent chain</li><li>Tags (colored, shared across projects) + dedicated tag management</li><li>Notes on a TC with red highlighting</li><li>Move TCs up/down in the list and renumber by order (admin mode)</li><li>Merged CSV/XLSX/JSON export with category and TC selection</li><li>Copy individual fields to clipboard, configurable whole-TC copy</li><li>Responsive layout, fixed permanent delete</li>',
+    btn_close: 'Close',
+
+    /* csv export headers */
+    csv_h_id: 'ID',
+    csv_h_name: 'Name',
+    csv_h_goal: 'Goal',
+    csv_h_preconditions: 'Preconditions',
+    csv_h_test_data: 'Test data',
+    csv_h_steps: 'Steps',
+    csv_h_expected_result: 'Expected result',
+    csv_h_notes: 'Notes',
+    csv_h_tags: 'Tags',
+    csv_h_steps_expected: 'Step expected result',
+    csv_h_priority: 'Priority',
+    csv_h_status: 'Status',
+
+    /* find & replace */
+    fr_title: 'Find and replace',
+    fr_find_label: 'Find',
+    fr_find_placeholder: 'Text to search for',
+    fr_replace_label: 'Replace with',
+    fr_replace_placeholder: 'Replacement text',
+    fr_case_sensitive: 'Match case',
+    fr_fields_label: 'Search in fields',
+    fr_search_btn: 'Find matches',
+    fr_confirm_btn: 'Replace all',
+    fr_no_results: 'No matches found',
+    fr_results_count: 'Found {n} matches in {tc} test cases',
+    fr_done: 'Replaced {n} matches',
+
+    /* clipboard copy */
+    clip_id: 'ID',
+    clip_name: 'Name',
+    clip_goal: 'Goal',
+    clip_preconditions: 'Preconditions',
+    clip_steps: 'Steps:',
+    clip_expected_result: 'Expected result:',
+
+    /* version modal info */
+    mv_info: '{id} will be marked as deleted<br>New version: {newId}'
+  }
+};
+
+/* Aktuální jazyk — výchozí čeština, lze přepsat z localStorage */
+let currentLang = localStorage.getItem('tc_lang') || 'cs';
+
+/* Vrátí přeložený text pro klíč, s volitelnou interpolací {param} */
+function t(key, params) {
+  const dict = I18N[currentLang] || I18N.cs;
+  let str = dict[key] !== undefined ? dict[key] : key;
+  if (params) {
+    Object.keys(params).forEach(p => {
+      str = str.replace(`{${p}}`, params[p]);
+    });
+  }
+  return str;
+}
+
+function setLang(lang) {
+  if (!I18N[lang]) return;
+  currentLang = lang;
+  localStorage.setItem('tc_lang', lang);
+}

@@ -1,0 +1,78 @@
+{
+  "name": "tc-creator",
+  "version": "1.0.0",
+  "description": "TC Creator – Tvorba a editace test casů",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "build:win": "electron-builder --win nsis portable",
+    "build:win:installer": "electron-builder --win nsis",
+    "build:win:portable": "electron-builder --win portable",
+    "build:mac": "electron-builder --mac dmg",
+    "build:linux": "electron-builder --linux AppImage deb",
+    "build:all": "electron-builder --win nsis portable --mac dmg --linux AppImage deb"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.tccreator.app",
+    "productName": "TC Creator",
+    "copyright": "Copyright © 2026",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "index.html",
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "i18n.js",
+      "style.css",
+      "sortable.min.js",
+      "assets/**/*",
+      "node_modules/**/*",
+      "!node_modules/.cache/**/*",
+      "!**/*.md"
+    ],
+    "win": {
+      "signAndEditExecutable": false,
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "TC Creator",
+      "artifactName": "TCCreator-Setup-${version}.exe"
+    },
+    "portable": {
+      "artifactName": "TCCreator-Portable-${version}.exe"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        { "target": "dmg", "arch": ["x64", "arm64"] }
+      ]
+    },
+    "linux": {
+      "category": "Office",
+      "target": [
+        { "target": "AppImage", "arch": ["x64"] },
+        { "target": "deb", "arch": ["x64"] }
+      ]
+    }
+  }
+}

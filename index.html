@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TC Creator</title>
+<link rel="stylesheet" href="style.css">
+<script src="i18n.js"></script>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     TOPBAR
+════════════════════════════════════════ -->
+<div class="topbar">
+  <span class="topbar-title">
+    <span data-i18n="app_title">TC Creator</span>
+  </span>
+
+  <div class="row" style="gap:6px;flex:1;padding:0 8px;">
+    <button class="sbtn" id="btn-new" data-i18n-title="btn_new_title" title="Nový projekt">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 13h6"/><path d="M12 10v6"/></svg>
+      <span data-i18n="btn_new">Nový projekt</span>
+    </button>
+    <button class="sbtn" id="btn-open" data-i18n-title="btn_open_title" title="Otevřít projekt">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"/></svg>
+      <span data-i18n="btn_open">Otevřít</span>
+    </button>
+    <button class="sbtn" id="btn-export-json" data-i18n-title="btn_save_title" title="Uložit projekt (záloha JSON)" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>
+      <span data-i18n="btn_save">Uložit</span>
+    </button>
+    <div style="width:1px;height:22px;background:var(--border3);margin:0 2px;"></div>
+    <button class="sbtn accent" id="btn-export" data-i18n-title="btn_export_title" title="Exportovat (CSV / XLSX / JSON)" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></svg>
+      <span data-i18n="btn_export">Export</span>
+    </button>
+    <div style="width:1px;height:22px;background:var(--border3);margin:0 2px;"></div>
+    <button class="sbtn" id="btn-find-replace" data-i18n-title="btn_find_replace_title" title="Najít a nahradit" disabled>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <span data-i18n="btn_find_replace">Najít a nahradit</span>
+    </button>
+    <button class="sbtn" id="btn-manage-tags" data-i18n-title="btn_manage_tags_title" title="Správa štítků">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.29-6.29a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
+      <span data-i18n="btn_manage_tags">Štítky</span>
+    </button>
+  </div>
+
+  <div class="topbar-right">
+    <span id="autosave-ind" style="font-size:11px;color:var(--text4);opacity:0;transition:opacity .5s;margin-right:4px;" data-i18n="autosave_saved">Uloženo</span>
+    <button class="tb-btn" id="lang-btn" onclick="toggleLang()" data-i18n-title="lang_title" title="Přepnout jazyk">
+      <span id="lang-label" style="font-size:11px;font-weight:700;letter-spacing:.02em;">CZ</span>
+    </button>
+    <button class="tb-btn" id="admin-btn" onclick="toggleAdminMode()" data-i18n-title="admin_title" title="Administrátorský mód">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 22c-3.806-1.45-7-3.966-7-9V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1v4"/><path d="M14.923 16.547 14 16.164"/><path d="m14.923 18.843-.923.383"/><path d="M16.547 14.923 16.164 14"/><path d="m16.547 20.467-.383.924"/><path d="m18.843 14.923.383-.923"/><path d="m19.225 21.391-.382-.924"/><path d="m20.467 16.547.923-.383"/><path d="m20.467 18.843.923.383"/><circle cx="17.695" cy="17.695" r="3"/></svg>
+    </button>
+    <button class="tb-btn" id="theme-btn" onclick="toggleTheme()" data-i18n-title="theme_title" title="Přepnout téma">
+      <!-- měsíc (tmavý theme výchozí) -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+    </button>
+    <button class="tb-btn" id="settings-btn" onclick="openModalSettings()" data-i18n-title="settings_title" title="Nastavení">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+    </button>
+    <button class="tb-btn" id="about-btn" onclick="openModalAbout()" data-i18n-title="about_title" title="O aplikaci">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PROJECT BAR
+════════════════════════════════════════ -->
+<div class="project-bar" id="project-bar" style="display:none">
+  <span class="project-bar-label" data-i18n="pb_project">Projekt</span>
+  <input class="inp name-inp" id="proj-name" data-i18n-placeholder="pb_name_placeholder" placeholder="Název projektu" readonly data-i18n-title="pb_name_readonly_title" title="Název lze upravit pouze v administrátorském módu">
+  <span class="project-bar-label" style="margin-left:8px" data-i18n="pb_prefix">Prefix</span>
+  <input class="inp prefix-inp" id="proj-prefix" placeholder="LOGIN" maxlength="24" readonly data-i18n-title="pb_prefix_readonly_title" title="Prefix lze upravit pouze v administrátorském módu — změna se promítne do všech test casů">
+  <button class="sbtn warn hidden" id="proj-prefix-apply" style="padding:5px 9px;font-size:12px;" data-i18n="pb_prefix_apply">Použít prefix</button>
+  <label class="cb-row" style="margin-left:8px" data-i18n-title="pb_renumber_title" title="Po smazání TC přečíslovat zbývající">
+    <input type="checkbox" id="proj-renumber">
+    <span data-i18n="pb_renumber">Přečíslovat po smazání</span>
+  </label>
+  <button class="sbtn warn hidden" id="btn-renumber-order" style="padding:5px 9px;font-size:12px;" data-i18n-title="pb_renumber_order_title" title="Přečísluje ID všech TC podle jejich aktuálního pořadí v seznamu" data-i18n="pb_renumber_order">Přečíslovat podle pořadí</button>
+  <span id="proj-filepath" style="font-size:11px;color:var(--text5);margin-left:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:280px;"></span>
+</div>
+
+<!-- ══════════════════════════════════════
+     HLAVNÍ OBSAH
+════════════════════════════════════════ -->
+<div class="main-content" id="main-content">
+
+  <!-- prázdný stav / uvítání -->
+  <div class="empty-state" id="empty-state">
+    <div class="empty-state-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.35"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6"/><path d="M9 16h4"/></svg>
+    </div>
+    <div class="empty-state-text" data-i18n="empty_state_text">Vytvořte nový projekt nebo otevřete existující</div>
+  </div>
+
+  <!-- hlavička "tabulky" -->
+  <div id="tc-list-header" class="tc-list-header" style="display:none">
+    <span class="tc-lh-spacer"></span>
+    <span class="tc-lh-id" data-i18n="th_id">ID TC</span>
+    <span class="tc-lh-name" data-i18n="th_name">Název TC</span>
+    <span class="tc-lh-priority" data-i18n="th_priority">Priorita</span>
+    <span class="tc-lh-status" data-i18n="th_status">Stav</span>
+  </div>
+
+  <!-- seznam TC -->
+  <div id="tc-list" class="tc-list" style="display:none"></div>
+
+  <!-- tlačítko přidat TC -->
+  <button class="add-tc-btn" id="add-tc-btn" style="display:none">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+    <span data-i18n="add_tc">Přidat test case</span>
+  </button>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — nový projekt
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-new-ov" onclick="if(event.target===this)closeModalNew()">
+  <div class="modal">
+    <div class="modal-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M9 13h6"/><path d="M12 10v6"/></svg>
+      <span data-i18n="mn_title">Nový projekt</span>
+    </div>
+    <div class="modal-row">
+      <div class="modal-label" data-i18n="mn_name_label">Název projektu</div>
+      <input class="modal-inp" id="mn-name" data-i18n-placeholder="mn_name_placeholder" placeholder="např. Login modul">
+    </div>
+    <div class="modal-row">
+      <div class="modal-label" data-i18n="mn_prefix_label">Prefix ID</div>
+      <input class="modal-inp mono" id="mn-prefix" data-i18n-placeholder="mn_prefix_placeholder" placeholder="např. LOGIN" maxlength="24"
+             oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9_-]/g,'')">
+      <div class="modal-hint" data-i18n="mn_prefix_hint">Max 12 znaků, pouze písmena, číslice, _ a -</div>
+    </div>
+    <div class="modal-row">
+      <label class="cb-row">
+        <input type="checkbox" id="mn-renumber">
+        <span data-i18n="mn_renumber">Přečíslovat TC po smazání</span>
+      </label>
+    </div>
+    <div class="modal-footer">
+      <button class="sbtn" onclick="closeModalNew()" data-i18n="btn_cancel">Zrušit</button>
+      <button class="sbtn accent" onclick="confirmNewProject()" data-i18n="btn_create">Vytvořit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — verzovat TC
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-version-ov" onclick="if(event.target===this)closeModalVersion()">
+  <div class="modal">
+    <div class="modal-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M12 2v4"/><path d="m16.2 7.8 2.9-2.9"/><path d="M18 12h4"/><path d="m16.2 16.2 2.9 2.9"/><path d="M12 18v4"/><path d="m4.9 19.1 2.9-2.9"/><path d="M2 12h4"/><path d="m4.9 4.9 2.9 2.9"/></svg>
+      <span data-i18n="mv_title">Nová verze TC</span>
+    </div>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:14px;line-height:1.6" data-i18n-html="mv_text">
+      Původní TC bude označen jako smazaný a zůstane jako reference.<br>
+      Pod ním bude vytvořena nová verze se zkopírovaným obsahem.
+    </p>
+    <div id="modal-version-info" style="font-size:13px;color:var(--text2);margin-bottom:4px;"></div>
+    <div class="modal-footer">
+      <button class="sbtn" onclick="closeModalVersion()" data-i18n="btn_cancel">Zrušit</button>
+      <button class="sbtn accent" onclick="confirmVersion()" data-i18n="btn_create_version">Vytvořit verzi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — export CSV formát
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-csv-ov" onclick="if(event.target===this)closeModalCsv()">
+  <div class="modal modal-wide">
+    <div class="modal-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/></svg>
+      <span data-i18n="mc_title">Export do CSV</span>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-label" data-i18n="mc_select_label">Test casy k exportu</div>
+      <div class="csv-select-toolbar">
+        <button class="sbtn" id="csv-select-all" style="padding:4px 10px;font-size:12px;" data-i18n="mc_select_all">Vybrat vše</button>
+        <button class="sbtn" id="csv-select-none" style="padding:4px 10px;font-size:12px;" data-i18n="mc_select_none">Zrušit výběr</button>
+        <span class="csv-select-count" id="csv-select-count"></span>
+      </div>
+      <div class="csv-tc-select-list" id="csv-tc-select-list"></div>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-label" data-i18n="mc_columns_label">Kategorie k exportu</div>
+      <div class="csv-columns-grid" id="csv-columns-grid"></div>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-label" data-i18n="mc_format_label">Formát kroků a výsledků v buňce</div>
+
+      <label class="csv-format-opt" id="opt-xlsx">
+        <input type="radio" name="csv-format" value="xlsx" checked>
+        <div>
+          <div class="csv-format-title" data-i18n="mc_format_xlsx_title">XLSX (Excel — doporučeno)</div>
+          <div class="csv-format-desc" data-i18n="mc_format_xlsx_desc">Plnohodnotný Excel sešit s automatickým dropdown menu pro Výsledek testu, zalamováním textu a formátováním hlavičky.</div>
+        </div>
+      </label>
+
+      <label class="csv-format-opt" id="opt-multiline">
+        <input type="radio" name="csv-format" value="multiline">
+        <div>
+          <div class="csv-format-title" data-i18n="mc_format_multiline_title">CSV víceřádkové</div>
+          <div class="csv-format-desc" data-i18n="mc_format_multiline_desc">Každý krok je zobrazen na samostatném řádku uvnitř buňky. Po správném importu (viz nápověda níže) je zobrazení v Excelu čisté a přehledné. Při pouhém otevření souboru se však může obsah buňky rozdělit na více řádků.</div>
+        </div>
+      </label>
+
+      <label class="csv-format-opt" id="opt-pipe">
+        <input type="radio" name="csv-format" value="pipe">
+        <div>
+          <div class="csv-format-title" data-i18n="mc_format_pipe_title">CSV jednořádkové (oddělené „ | ")</div>
+          <div class="csv-format-desc" data-i18n="mc_format_pipe_desc">Všechny kroky jsou uvedeny za sebou v jedné řádce. Zobrazení je správné i při pouhém otevření souboru, je však méně přehledné.</div>
+        </div>
+      </label>
+
+      <label class="csv-format-opt" id="opt-json">
+        <input type="radio" name="csv-format" value="json">
+        <div>
+          <div class="csv-format-title" data-i18n="mc_format_json_title">JSON (vybrané TC)</div>
+          <div class="csv-format-desc" data-i18n="mc_format_json_desc">Exportuje vybrané test casy jako JSON soubor ve stejné struktuře jako projekt (bez smazaných TC).</div>
+          <label class="cb-row" id="json-flatten-row" style="margin-top:8px;display:none;align-items:flex-start;">
+            <input type="checkbox" id="json-flatten-inheritance" style="margin-top:2px;flex-shrink:0;">
+            <span data-i18n="mc_json_flatten">Sloučit zděděné kroky a předpoklady do vlastních (pro trvale samostatný soubor bez závislosti na rodiči)</span>
+          </label>
+        </div>
+      </label>
+    </div>
+
+    <div class="csv-help-box" id="csv-help-multiline">
+      <div class="csv-help-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span data-i18n="mc_help_title">Postup importu do Excelu</span>
+      </div>
+      <ol class="csv-help-list">
+        <li data-i18n-html="mc_help_1">Otevřete prázdný sešit Excel (nikoli dvojklikem na CSV soubor)</li>
+        <li data-i18n-html="mc_help_2">Vyberte záložku <strong>Data → Z textu/CSV</strong> (Get Data → From Text/CSV)</li>
+        <li data-i18n-html="mc_help_3">Vyberte exportovaný soubor a potvrďte volbu <strong>Import</strong></li>
+        <li data-i18n-html="mc_help_4">V náhledu importu ověřte, že je zaškrtnuta možnost <strong>„Použít první řádek jako záhlaví"</strong></li>
+        <li data-i18n-html="mc_help_5">Vyberte sloupce Kroky a Očekávaný výsledek, poté na záložce <strong>Domů</strong> zvolte <strong>Zalamovat text</strong></li>
+      </ol>
+    </div>
+
+    <div class="modal-footer">
+      <button class="sbtn" onclick="closeModalCsv()" data-i18n="btn_cancel">Zrušit</button>
+      <button class="sbtn accent" id="csv-confirm-btn" onclick="confirmExportCsv()" data-i18n="btn_export">Exportovat</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — trvale smazat TC (admin)
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-harddelete-ov" onclick="if(event.target===this)closeModalHardDelete()">
+  <div class="modal">
+    <div class="modal-title" style="color:var(--save-dirty)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+      <span data-i18n="hd_title">Trvale smazat test case</span>
+    </div>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:14px;line-height:1.6" data-i18n="hd_text">
+      Tato akce je nevratná. Test case bude z projektu zcela odstraněn, bez možnosti obnovení ani v záloze JSON.
+    </p>
+    <div class="modal-row">
+      <div class="modal-label"><span data-i18n="hd_confirm_label">Pro potvrzení napište ID test casu:</span> <strong id="hd-target-id"></strong></div>
+      <input class="modal-inp mono" id="hd-confirm-input" data-i18n-placeholder="hd_confirm_placeholder" placeholder="Zadejte ID">
+    </div>
+    <div class="modal-footer">
+      <button class="sbtn" onclick="closeModalHardDelete()" data-i18n="btn_cancel">Zrušit</button>
+      <button class="sbtn danger" id="hd-confirm-btn" onclick="confirmHardDelete()" disabled data-i18n="btn_hard_delete">Trvale smazat</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — správa štítků
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-tags-ov" onclick="if(event.target===this)closeModalManageTags()">
+  <div class="modal">
+    <div class="modal-title" data-i18n="tags_modal_title">Správa štítků</div>
+    <p style="font-size:12px;color:var(--text4);margin-bottom:12px;line-height:1.5" data-i18n="tags_modal_hint">
+      Štítky jsou společné pro všechny projekty. Smazáním štítku ho odebereš i ze všech TC v aktuálně otevřeném projektu.
+    </p>
+
+    <div class="modal-row">
+      <div class="tags-add-row">
+        <input type="text" class="inp tags-new-inp" id="tags-modal-new-inp" data-i18n-placeholder="tag_new_placeholder" placeholder="Nový štítek…">
+        <button class="sbtn accent" id="tags-modal-add-btn" data-i18n="tag_create_btn">Vytvořit</button>
+      </div>
+    </div>
+
+    <div class="csv-tc-select-list" id="tags-modal-list" style="max-height:280px;"></div>
+
+    <div class="modal-footer">
+      <button class="sbtn accent" onclick="closeModalManageTags()" data-i18n="btn_close">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — nastavení kopírování TC
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-copy-settings-ov" onclick="if(event.target===this)closeModalCopySettings()">
+  <div class="modal">
+    <div class="modal-title" data-i18n="copy_settings_title">Co se má kopírovat</div>
+    <p style="font-size:12px;color:var(--text4);margin-bottom:12px;line-height:1.5" data-i18n="copy_settings_hint">
+      ID test casu se kopíruje vždy. Vyberte, které další části se mají zahrnout do textu při kliknutí na "Kopírovat".
+    </p>
+    <div class="csv-columns-grid" id="copy-settings-list"></div>
+    <div class="modal-footer">
+      <button class="sbtn accent" onclick="closeModalCopySettings()" data-i18n="btn_close">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — nastavení
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-settings-ov" onclick="if(event.target===this)closeModalSettings()">
+  <div class="modal">
+    <div class="modal-title" data-i18n="settings_title">Nastavení</div>
+
+    <div class="modal-row">
+      <label class="cb-row" style="align-items:flex-start;gap:8px;">
+        <input type="checkbox" id="settings-silent-backup" style="margin-top:2px;">
+        <span>
+          <span style="display:block;font-weight:600;" data-i18n="settings_silent_backup">Tiché automatické zálohy</span>
+          <span style="display:block;font-size:11px;color:var(--text4);margin-top:2px;" data-i18n="settings_silent_backup_hint">Každých 5 minut (pokud je rozpracováno) se na pozadí vytvoří záloha do složky ".tc_backups" vedle projektu — bez dialogu. Uchovává se posledních 5 záloh, starší se automaticky mažou.</span>
+        </span>
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button class="sbtn accent" onclick="closeModalSettings()" data-i18n="btn_close">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — o aplikaci
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-about-ov" onclick="if(event.target===this)closeModalAbout()">
+  <div class="modal modal-about">
+    <div class="about-name" data-i18n="app_title">TC Creator</div>
+    <div class="about-version"><span data-i18n="about_version_label">Verze</span> 2.1.0</div>
+
+    <div class="about-ai-note" data-i18n-html="about_ai_note">
+      Tato aplikace byla vytvořena ve spolupráci s modelem <strong>Claude Sonnet 4.6</strong> od Anthropic, který se podílel na návrhu i implementaci.
+    </div>
+
+    <div class="about-changelog">
+      <div class="about-changelog-entry">
+        <div class="about-changelog-title" data-i18n="about_changelog_title_210">Verze 2.1.0</div>
+        <ul class="about-changelog-list" data-i18n-html="about_changelog_list_210">
+          <li>Nový TC převezme název z předchozího TC v seznamu (rychlejší zadávání navazujících TC)</li>
+          <li>Export vybraných TC do JSON: volba "sloučit zděděné kroky/předpoklady do vlastních" pro trvale samostatný soubor</li>
+          <li>Barvy štítků se ukládají přímo do JSON projektu (project.tagColors), aby seděly i v jiných nástrojích (např. TC Runner)</li>
+          <li>Tiché automatické zálohy na pozadí (rotace posledních 5) + přepínač v novém okně Nastavení</li>
+          <li>Verzované ruční ukládání ("Uložit" navrhne _v1, _v2, ... místo přepisování)</li>
+          <li>Opravené zalomení dlouhých popisků u checkboxů v modalech</li>
+          <li>Odstraněna nezobrazující se ikona programu (UI, okno i instalátor)</li>
+        </ul>
+      </div>
+      <div class="about-changelog-entry">
+        <div class="about-changelog-title" data-i18n="about_changelog_title_200">Verze 2.0.0</div>
+        <ul class="about-changelog-list" data-i18n-html="about_changelog_list_200">
+          <li>Kroky mají vlastní Očekávaný výsledek a Testovací data (vedle samostatného celkového seznamu)</li>
+          <li>Vložení kroku mezi existující — i doprostřed zděděných kroků</li>
+          <li>Opravené vícestupňové dědění kroků a předpokladů napříč řetězcem rodičů</li>
+          <li>Štítky (barevné, sdílené napříč projekty) + samostatná správa štítků</li>
+          <li>Poznámky u TC s červeným zvýrazněním</li>
+          <li>Přesun TC v seznamu nahoru/dolů a přečíslování podle pořadí (admin mód)</li>
+          <li>Sloučený export CSV/XLSX/JSON s výběrem kategorií a TC</li>
+          <li>Kopírování jednotlivých polí do schránky, konfigurovatelné kopírování celého TC</li>
+          <li>Responzivní rozložení, opravené trvalé smazání</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="modal-footer" style="justify-content:center;margin-top:18px;">
+      <button class="sbtn" onclick="closeModalAbout()" data-i18n="btn_close">Zavřít</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MODAL — najít a nahradit
+════════════════════════════════════════ -->
+<div class="modal-ov" id="modal-findreplace-ov" onclick="if(event.target===this)closeModalFindReplace()">
+  <div class="modal modal-wide">
+    <div class="modal-title">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:6px"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+      <span data-i18n="fr_title">Najít a nahradit</span>
+    </div>
+
+    <div class="modal-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div>
+        <div class="modal-label" data-i18n="fr_find_label">Najít</div>
+        <input class="modal-inp" id="fr-find" data-i18n-placeholder="fr_find_placeholder" placeholder="Text k vyhledání">
+      </div>
+      <div>
+        <div class="modal-label" data-i18n="fr_replace_label">Nahradit za</div>
+        <input class="modal-inp" id="fr-replace" data-i18n-placeholder="fr_replace_placeholder" placeholder="Náhradní text">
+      </div>
+    </div>
+
+    <div class="modal-row">
+      <label class="cb-row">
+        <input type="checkbox" id="fr-case-sensitive">
+        <span data-i18n="fr_case_sensitive">Rozlišovat velikost písmen</span>
+      </label>
+    </div>
+
+    <div class="modal-row">
+      <div class="modal-label" data-i18n="fr_fields_label">Hledat v polích</div>
+      <div class="fr-fields-grid">
+        <label class="cb-row"><input type="checkbox" id="fr-field-name" checked><span data-i18n="f_name">Název</span></label>
+        <label class="cb-row"><input type="checkbox" id="fr-field-goal"><span data-i18n="f_goal">Cíl</span></label>
+        <label class="cb-row"><input type="checkbox" id="fr-field-preconditions"><span data-i18n="f_preconditions">Předpoklady</span></label>
+        <label class="cb-row"><input type="checkbox" id="fr-field-test_data"><span data-i18n="f_test_data">Testovací data</span></label>
+        <label class="cb-row"><input type="checkbox" id="fr-field-steps"><span data-i18n="f_steps">Kroky</span></label>
+        <label class="cb-row"><input type="checkbox" id="fr-field-expected_result"><span data-i18n="f_expected_result">Očekávaný výsledek</span></label>
+      </div>
+    </div>
+
+    <div class="modal-row">
+      <button class="sbtn accent" id="fr-search-btn" data-i18n="fr_search_btn">Najít výskyty</button>
+    </div>
+
+    <div id="fr-results-wrap" class="fr-results-wrap hidden">
+      <div class="modal-label" id="fr-results-count"></div>
+      <div class="fr-results-list" id="fr-results-list"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="sbtn" onclick="closeModalFindReplace()" data-i18n="btn_cancel">Zrušit</button>
+      <button class="sbtn danger" id="fr-confirm-btn" data-i18n="fr_confirm_btn" disabled>Nahradit vše</button>
+    </div>
+  </div>
+</div>
+
+<script src="sortable.min.js"></script>
+<script src="renderer.js"></script>
+</body>
+</html>
