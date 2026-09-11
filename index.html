@@ -353,13 +353,20 @@
 <div class="modal-ov" id="modal-about-ov" onclick="if(event.target===this)closeModalAbout()">
   <div class="modal modal-about">
     <div class="about-name" data-i18n="app_title">TC Creator</div>
-    <div class="about-version"><span data-i18n="about_version_label">Verze</span> 2.2.0</div>
+    <div class="about-version"><span data-i18n="about_version_label">Verze</span> 2.2.1</div>
 
     <div class="about-ai-note" data-i18n-html="about_ai_note">
       Tato aplikace byla vytvořena ve spolupráci s modelem <strong>Claude Sonnet 4.6</strong> od Anthropic, který se podílel na návrhu i implementaci.
     </div>
 
     <div class="about-changelog">
+      <div class="about-changelog-entry">
+        <div class="about-changelog-title" data-i18n="about_changelog_title_221">Verze 2.2.1</div>
+        <ul class="about-changelog-list" data-i18n-html="about_changelog_list_221">
+          <li>Schránka se sama zkrátí na tenký proužek u okraje a nepřekrývá zbytek aplikace — vysune se, jen když na ni najedeš myší</li>
+          <li>Tlačítko Schránka v záhlaví teď vizuálně ukazuje, jestli je zapnutá</li>
+        </ul>
+      </div>
       <div class="about-changelog-entry">
         <div class="about-changelog-title" data-i18n="about_changelog_title_220">Verze 2.2.0</div>
         <ul class="about-changelog-list" data-i18n-html="about_changelog_list_220">
@@ -376,20 +383,6 @@
           <li>Verzované ruční ukládání ("Uložit" navrhne _v1, _v2, ... místo přepisování)</li>
           <li>Opravené zalomení dlouhých popisků u checkboxů v modalech</li>
           <li>Odstraněna nezobrazující se ikona programu (UI, okno i instalátor)</li>
-        </ul>
-      </div>
-      <div class="about-changelog-entry">
-        <div class="about-changelog-title" data-i18n="about_changelog_title_200">Verze 2.0.0</div>
-        <ul class="about-changelog-list" data-i18n-html="about_changelog_list_200">
-          <li>Kroky mají vlastní Očekávaný výsledek a Testovací data (vedle samostatného celkového seznamu)</li>
-          <li>Vložení kroku mezi existující — i doprostřed zděděných kroků</li>
-          <li>Opravené vícestupňové dědění kroků a předpokladů napříč řetězcem rodičů</li>
-          <li>Štítky (barevné, sdílené napříč projekty) + samostatná správa štítků</li>
-          <li>Poznámky u TC s červeným zvýrazněním</li>
-          <li>Přesun TC v seznamu nahoru/dolů a přečíslování podle pořadí (admin mód)</li>
-          <li>Sloučený export CSV/XLSX/JSON s výběrem kategorií a TC</li>
-          <li>Kopírování jednotlivých polí do schránky, konfigurovatelné kopírování celého TC</li>
-          <li>Responzivní rozložení, opravené trvalé smazání</li>
         </ul>
       </div>
     </div>

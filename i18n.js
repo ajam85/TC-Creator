@@ -226,6 +226,8 @@ const I18N = {
     /* modal: about */
     about_version_label: 'Verze',
     about_ai_note: 'Tato aplikace byla vytvořena ve spolupráci s modelem <strong>Claude Sonnet 4.6</strong> od Anthropic, který se podílel na návrhu i implementaci.',
+    about_changelog_title_221: 'Verze 2.2.1',
+    about_changelog_list_221: '<li>Schránka se sama zkrátí na tenký proužek u okraje a nepřekrývá zbytek aplikace — vysune se, jen když na ni najedeš myší</li><li>Tlačítko Schránka v záhlaví teď vizuálně ukazuje, jestli je zapnutá</li>',
     about_changelog_title_220: 'Verze 2.2.0',
     about_changelog_list_220: '<li>Nová postranní "Schránka" (tlačítko v záhlaví) — místo pro uložení textu, který se u TC často opakuje, s kopírováním ven i vkládáním nových hodnot</li>',
     about_changelog_title_210: 'Verze 2.1.0',
@@ -496,6 +498,8 @@ const I18N = {
     /* modal: about */
     about_version_label: 'Version',
     about_ai_note: 'This application was built in collaboration with <strong>Claude Sonnet 4.6</strong> by Anthropic, which contributed to both design and implementation.',
+    about_changelog_title_221: 'Version 2.2.1',
+    about_changelog_list_221: '<li>The Scratchpad now auto-collapses to a thin edge strip instead of covering the rest of the app — it slides out only when you hover over it</li><li>The Scratchpad button in the header now visually shows whether it is active</li>',
     about_changelog_title_220: 'Version 2.2.0',
     about_changelog_list_220: '<li>New side "Scratchpad" panel (button in the header) — a place to save text that repeats often across TCs, with copy-out and paste-in support</li>',
     about_changelog_title_210: 'Version 2.1.0',

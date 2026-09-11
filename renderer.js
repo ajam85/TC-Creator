@@ -97,6 +97,7 @@ function toggleScratchpad() {
   const panel = document.getElementById('scratchpad-panel');
   const willOpen = !panel.classList.contains('open');
   panel.classList.toggle('open', willOpen);
+  document.getElementById('btn-scratchpad').classList.toggle('scratchpad-btn-active', willOpen);
   if (willOpen) renderScratchpad();
 }
 
@@ -3005,6 +3006,7 @@ document.addEventListener('keydown', e => {
     closeModalSettings();
     closeModalFindReplace();
     document.getElementById('scratchpad-panel').classList.remove('open');
+    document.getElementById('btn-scratchpad').classList.remove('scratchpad-btn-active');
     if (state.expandedId) {
       state.expandedId = null;
       renderTcList();
