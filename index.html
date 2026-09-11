@@ -44,6 +44,10 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.29-6.29a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>
       <span data-i18n="btn_manage_tags">Štítky</span>
     </button>
+    <button class="sbtn" id="btn-scratchpad" data-i18n-title="btn_scratchpad_title" title="Schránka" disabled onclick="toggleScratchpad()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+      <span data-i18n="btn_scratchpad">Schránka</span>
+    </button>
   </div>
 
   <div class="topbar-right">
@@ -349,13 +353,19 @@
 <div class="modal-ov" id="modal-about-ov" onclick="if(event.target===this)closeModalAbout()">
   <div class="modal modal-about">
     <div class="about-name" data-i18n="app_title">TC Creator</div>
-    <div class="about-version"><span data-i18n="about_version_label">Verze</span> 2.1.0</div>
+    <div class="about-version"><span data-i18n="about_version_label">Verze</span> 2.2.0</div>
 
     <div class="about-ai-note" data-i18n-html="about_ai_note">
       Tato aplikace byla vytvořena ve spolupráci s modelem <strong>Claude Sonnet 4.6</strong> od Anthropic, který se podílel na návrhu i implementaci.
     </div>
 
     <div class="about-changelog">
+      <div class="about-changelog-entry">
+        <div class="about-changelog-title" data-i18n="about_changelog_title_220">Verze 2.2.0</div>
+        <ul class="about-changelog-list" data-i18n-html="about_changelog_list_220">
+          <li>Nová postranní "Schránka" (tlačítko v záhlaví) — místo pro uložení textu, který se u TC často opakuje, s kopírováním ven i vkládáním nových hodnot</li>
+        </ul>
+      </div>
       <div class="about-changelog-entry">
         <div class="about-changelog-title" data-i18n="about_changelog_title_210">Verze 2.1.0</div>
         <ul class="about-changelog-list" data-i18n-html="about_changelog_list_210">
@@ -444,6 +454,24 @@
       <button class="sbtn danger" id="fr-confirm-btn" data-i18n="fr_confirm_btn" disabled>Nahradit vše</button>
     </div>
   </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCHRÁNKA — postranní panel s poznámkami k opakovaně použitelnému textu
+════════════════════════════════════════ -->
+<div class="scratchpad-panel" id="scratchpad-panel">
+  <div class="scratchpad-header">
+    <span data-i18n="scratchpad_title">Schránka</span>
+    <button class="tb-btn" onclick="toggleScratchpad()" title="Zavřít" data-i18n-title="btn_close">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+  <p class="scratchpad-hint" data-i18n="scratchpad_hint">Sem si můžeš uložit text, který se u TC často opakuje — kdykoliv ho odsud zkopíruješ, nebo do políčka rovnou vlož novou hodnotu.</p>
+  <div class="scratchpad-list" id="scratchpad-list"></div>
+  <button class="add-step-btn" id="scratchpad-add-btn" style="margin:10px 14px;">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+    <span data-i18n="scratchpad_add">Přidat položku</span>
+  </button>
 </div>
 
 <script src="sortable.min.js"></script>

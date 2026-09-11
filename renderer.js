@@ -52,6 +52,7 @@ function migrateTc(tc) {
 
 function migrateProject(project) {
   if (!project || !Array.isArray(project.testCases)) return;
+  if (!Array.isArray(project.scratchpad)) project.scratchpad = [];
   project.testCases.forEach(migrateTc);
 }
 
@@ -85,6 +86,90 @@ function getActiveTcs() {
 function getTcByUid(uid) {
   if (!state.project) return null;
   return state.project.testCases.find(tc => tc._uid === uid) || null;
+}
+
+/* ══════════════════════════════════════
+   SCHRÁNKA — postranní panel s opakovaně používaným textem
+   (uloženo v projektu jako project.scratchpad = [{ id, label, text }])
+══════════════════════════════════════ */
+function toggleScratchpad() {
+  if (!state.project) return;
+  const panel = document.getElementById('scratchpad-panel');
+  const willOpen = !panel.classList.contains('open');
+  panel.classList.toggle('open', willOpen);
+  if (willOpen) renderScratchpad();
+}
+
+function renderScratchpad() {
+  const list = document.getElementById('scratchpad-list');
+  if (!list || !state.project) return;
+  if (!Array.isArray(state.project.scratchpad)) state.project.scratchpad = [];
+
+  list.innerHTML = '';
+  state.project.scratchpad.forEach(entry => {
+    list.appendChild(buildScratchpadItem(entry));
+  });
+}
+
+function buildScratchpadItem(entry) {
+  const item = document.createElement('div');
+  item.className = 'scratchpad-item';
+
+  const row = document.createElement('div');
+  row.className = 'scratchpad-item-row';
+
+  const labelInp = document.createElement('input');
+  labelInp.type        = 'text';
+  labelInp.className   = 'scratchpad-item-label';
+  labelInp.value        = entry.label || '';
+  labelInp.placeholder = t('scratchpad_label_placeholder');
+  labelInp.addEventListener('input', () => {
+    entry.label = labelInp.value;
+    scheduleSave();
+  });
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'step-del';
+  delBtn.innerHTML  = '×';
+  delBtn.title      = t('scratchpad_delete_title');
+  delBtn.addEventListener('click', () => {
+    state.project.scratchpad = state.project.scratchpad.filter(e => e.id !== entry.id);
+    renderScratchpad();
+    scheduleSave();
+  });
+
+  row.appendChild(labelInp);
+  addFieldCopyButton(row, () => ta.value);
+  row.appendChild(delBtn);
+
+  const ta = document.createElement('textarea');
+  ta.rows        = 2;
+  ta.value       = entry.text || '';
+  ta.placeholder = t('scratchpad_text_placeholder');
+  ta.addEventListener('input', () => {
+    entry.text = ta.value;
+    scheduleSave();
+  });
+
+  item.appendChild(row);
+  item.appendChild(ta);
+  return item;
+}
+
+function addScratchpadEntry() {
+  if (!state.project) return;
+  if (!Array.isArray(state.project.scratchpad)) state.project.scratchpad = [];
+
+  const entry = { id: generateUid(), label: '', text: '' };
+  state.project.scratchpad.push(entry);
+  renderScratchpad();
+  scheduleSave();
+
+  setTimeout(() => {
+    const list = document.getElementById('scratchpad-list');
+    const textareas = list ? list.querySelectorAll('textarea') : [];
+    if (textareas.length) textareas[textareas.length - 1].focus();
+  }, 30);
 }
 
 /* Sestaví kompletní, správně proložené pořadí zobrazení kroků — zděděné
@@ -377,11 +462,12 @@ function confirmNewProject() {
   if (!prefix) { document.getElementById('mn-prefix').focus(); return; }
 
   state.project = {
-    project:   name,
-    prefix:    prefix,
-    renumber:  document.getElementById('mn-renumber').checked,
-    created:   new Date().toISOString().slice(0, 10),
-    testCases: []
+    project:    name,
+    prefix:     prefix,
+    renumber:   document.getElementById('mn-renumber').checked,
+    created:    new Date().toISOString().slice(0, 10),
+    scratchpad: [],
+    testCases:  []
   };
   state.filePath   = null;
   state.expandedId = null;
@@ -423,12 +509,14 @@ function activateProject() {
   document.getElementById('btn-export').disabled             = false;
   document.getElementById('btn-export-json').disabled       = false;
   document.getElementById('btn-find-replace').disabled      = false;
+  document.getElementById('btn-scratchpad').disabled        = false;
   document.getElementById('empty-state').style.display      = 'none';
   document.getElementById('tc-list-header').style.display   = 'flex';
   document.getElementById('tc-list').style.display          = 'flex';
   document.getElementById('add-tc-btn').style.display       = 'flex';
   renderTcList();
   initSortable();
+  renderScratchpad();
 }
 
 /* ══════════════════════════════════════
@@ -2880,6 +2968,7 @@ function bindTopbar() {
     if (e.key === 'Enter') { e.preventDefault(); addNewGlobalTag(); }
   });
   document.getElementById('add-tc-btn').addEventListener('click', addTc);
+  document.getElementById('scratchpad-add-btn').addEventListener('click', addScratchpadEntry);
 
   document.getElementById('settings-silent-backup').addEventListener('change', (e) => {
     saveSilentBackupSetting(e.target.checked);
@@ -2915,6 +3004,7 @@ document.addEventListener('keydown', e => {
     closeModalAbout();
     closeModalSettings();
     closeModalFindReplace();
+    document.getElementById('scratchpad-panel').classList.remove('open');
     if (state.expandedId) {
       state.expandedId = null;
       renderTcList();
