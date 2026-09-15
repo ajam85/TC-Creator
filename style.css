@@ -264,6 +264,23 @@ textarea.inp { resize: vertical; line-height: 1.6; }
   accent-color: var(--save-clean);
 }
 
+/* přidat TC hned pod tento */
+.tc-add-under-btn {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text4);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all .15s;
+}
+.tc-add-under-btn:hover { background: var(--accent-bg); color: var(--accent); }
+
 /* přesun TC nahoru/dolů (jen admin mód) */
 .tc-move-col {
   display: flex;

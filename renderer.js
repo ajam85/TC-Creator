@@ -511,6 +511,7 @@ function activateProject() {
   document.getElementById('btn-export-json').disabled       = false;
   document.getElementById('btn-find-replace').disabled      = false;
   document.getElementById('btn-scratchpad').disabled        = false;
+  document.getElementById('btn-bulk-edit').disabled          = false;
   document.getElementById('empty-state').style.display      = 'none';
   document.getElementById('tc-list-header').style.display   = 'flex';
   document.getElementById('tc-list').style.display          = 'flex';
@@ -524,14 +525,43 @@ function activateProject() {
    TC — PŘIDAT
 ══════════════════════════════════════ */
 function addTc() {
+  addTcInternal(null);
+}
+
+/* Přidá nový TC hned pod zadaný (referenční) TC v seznamu. ID dostane
+   tvar "<prefix><číslo referenčního TC>x<N>" — je to schválně mimo běžné
+   číslování, aby bylo hned poznat, že jde o dodatečně vsunutý TC. Pořadí
+   čísel si pak uživatel srovná tlačítkem "Přečíslovat podle pořadí". */
+function addTcUnder(refUid) {
+  addTcInternal(refUid);
+}
+
+function addTcInternal(refUid) {
   if (!state.project) return;
   const { prefix, renumber, testCases } = state.project;
-  const num   = nextTcNumber(testCases, renumber);
-  const newId = formatTcId(prefix, num, 1);
+
+  const refIdx = refUid ? testCases.findIndex(t => t._uid === refUid) : -1;
+  const refTc  = refIdx !== -1 ? testCases[refIdx] : null;
+
+  let newId;
+  if (refTc) {
+    const m = refTc.id.match(/(\d+)(?:-V\d+)?$/);
+    const baseNum = m ? m[1] : String(nextTcNumber(testCases, renumber)).padStart(3, '0');
+    const subRe = new RegExp(`^${prefix}${baseNum}x(\\d+)$`);
+    let maxSub = 0;
+    testCases.forEach(t => {
+      const sm = t.id.match(subRe);
+      if (sm) maxSub = Math.max(maxSub, parseInt(sm[1]));
+    });
+    newId = `${prefix}${baseNum}x${maxSub + 1}`;
+  } else {
+    const num = nextTcNumber(testCases, renumber);
+    newId = formatTcId(prefix, num, 1);
+  }
 
   // Název se často řadí za předchozí TC (stejný prefix názvu) —
-  // předvyplní se název posledního TC v seznamu jako výchozí bod k úpravě.
-  const prevTc = testCases[testCases.length - 1];
+  // předvyplní se název referenčního (nebo posledního) TC jako výchozí bod k úpravě.
+  const prevTc = refTc || testCases[testCases.length - 1];
   const prefillName = prevTc ? prevTc.name : '';
 
   const tc = {
@@ -553,7 +583,12 @@ function addTc() {
     locked:          false
   };
 
-  state.project.testCases.push(tc);
+  if (refTc) {
+    testCases.splice(refIdx + 1, 0, tc);
+  } else {
+    testCases.push(tc);
+  }
+
   state.expandedId = tc._uid;
   renderTcList();
   scheduleSave();
@@ -745,6 +780,14 @@ function buildTcRow(tc) {
     scheduleSave();
   };
   head.appendChild(exportCb);
+
+  // Přidat TC hned pod tento
+  const addUnderBtn = document.createElement('button');
+  addUnderBtn.className = 'tc-add-under-btn';
+  addUnderBtn.title      = t('tc_add_under_title');
+  addUnderBtn.innerHTML  = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>`;
+  addUnderBtn.onclick    = (e) => { e.stopPropagation(); addTcUnder(tc._uid); };
+  head.appendChild(addUnderBtn);
 
   // Přesun nahoru/dolů — jen v administrátorském módu
   if (state.adminMode) {
@@ -1186,8 +1229,7 @@ function renumberTcsByOrder() {
   let lastBaseNum  = undefined;
 
   state.project.testCases.forEach(tc => {
-    const m = tc.id.match(/-?(\d+)(?:-V\d+)?$/);
-    const baseNum = m ? m[1] : null;
+    const baseNum = tc.id.replace(/-V\d+$/, '');
     if (baseNum !== lastBaseNum) {
       counter++;
       lastBaseNum = baseNum;
@@ -2928,6 +2970,65 @@ function moveTc(uid, direction) {
 }
 
 /* ══════════════════════════════════════
+   HROMADNÉ ÚPRAVY — Priorita / Stav / Štítky
+   podle zaškrtnutých TC (stejný checkbox jako u výběru pro export)
+══════════════════════════════════════ */
+function getBulkEditTargets() {
+  if (!state.project) return [];
+  return state.project.testCases.filter(tc => !tc.deleted && tc.export_selected !== false);
+}
+
+function openModalBulkEdit() {
+  if (!state.project) return;
+  const targets = getBulkEditTargets();
+
+  document.getElementById('bulk-edit-count-hint').textContent = t('bulk_edit_count', { n: targets.length });
+  document.getElementById('bulk-edit-priority').value = '';
+  document.getElementById('bulk-edit-status').value   = '';
+
+  const addSel = document.getElementById('bulk-edit-add-tag');
+  const rmSel  = document.getElementById('bulk-edit-remove-tag');
+  addSel.innerHTML = `<option value="">${t('bulk_no_change')}</option>`;
+  rmSel.innerHTML  = `<option value="">${t('bulk_no_change')}</option>`;
+  globalTags.forEach(tag => {
+    const o1 = document.createElement('option'); o1.value = tag; o1.textContent = tag; addSel.appendChild(o1);
+    const o2 = document.createElement('option'); o2.value = tag; o2.textContent = tag; rmSel.appendChild(o2);
+  });
+
+  document.getElementById('modal-bulk-edit-ov').classList.add('open');
+}
+
+function closeModalBulkEdit() {
+  document.getElementById('modal-bulk-edit-ov').classList.remove('open');
+}
+
+function applyBulkEdit() {
+  const targets = getBulkEditTargets();
+  if (!targets.length) { closeModalBulkEdit(); return; }
+
+  const newPriority = document.getElementById('bulk-edit-priority').value;
+  const newStatus   = document.getElementById('bulk-edit-status').value;
+  const addTag      = document.getElementById('bulk-edit-add-tag').value;
+  const removeTag   = document.getElementById('bulk-edit-remove-tag').value;
+
+  targets.forEach(tc => {
+    if (newPriority) tc.priority = newPriority;
+    if (newStatus)   tc.status   = newStatus;
+    if (addTag) {
+      if (!tc.tags) tc.tags = [];
+      if (!tc.tags.includes(addTag)) tc.tags.push(addTag);
+    }
+    if (removeTag && tc.tags) {
+      tc.tags = tc.tags.filter(x => x !== removeTag);
+    }
+  });
+
+  closeModalBulkEdit();
+  renderTcList();
+  scheduleSave();
+}
+
+/* ══════════════════════════════════════
    SVG IKONY
 ══════════════════════════════════════ */
 function iconLock() {
@@ -2970,6 +3071,7 @@ function bindTopbar() {
   });
   document.getElementById('add-tc-btn').addEventListener('click', addTc);
   document.getElementById('scratchpad-add-btn').addEventListener('click', addScratchpadEntry);
+  document.getElementById('bulk-edit-apply-btn').addEventListener('click', applyBulkEdit);
 
   document.getElementById('settings-silent-backup').addEventListener('change', (e) => {
     saveSilentBackupSetting(e.target.checked);
@@ -3005,6 +3107,7 @@ document.addEventListener('keydown', e => {
     closeModalAbout();
     closeModalSettings();
     closeModalFindReplace();
+    closeModalBulkEdit();
     document.getElementById('scratchpad-panel').classList.remove('open');
     document.getElementById('btn-scratchpad').classList.remove('scratchpad-btn-active');
     if (state.expandedId) {

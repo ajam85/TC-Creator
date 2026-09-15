@@ -105,6 +105,14 @@ const I18N = {
     btn_manage_tags_title: 'Správa štítků (společné pro všechny projekty)',
     btn_scratchpad: 'Schránka',
     btn_scratchpad_title: 'Schránka — uložený text k opakovanému použití',
+    btn_bulk_edit: 'Hromadné úpravy',
+    btn_bulk_edit_title: 'Hromadně změnit Prioritu, Stav nebo Štítky u zaškrtnutých TC',
+    bulk_edit_title: 'Hromadné úpravy',
+    bulk_edit_count: 'Použije se na {n} zaškrtnutých TC (checkbox v hlavičce řádku).',
+    bulk_no_change: '— nezměnit —',
+    bulk_add_tag: 'Přidat štítek',
+    bulk_remove_tag: 'Odebrat štítek',
+    bulk_apply: 'Použít',
     scratchpad_title: 'Schránka',
     scratchpad_hint: 'Sem si můžeš uložit text, který se u TC často opakuje — kdykoliv ho odsud zkopíruješ, nebo do políčka rovnou vlož novou hodnotu.',
     scratchpad_add: 'Přidat položku',
@@ -142,6 +150,7 @@ const I18N = {
     f_result_remove: 'Odebrat',
     tc_export_check_title: 'Zahrnout do výběru při exportu',
     tc_move_up_title: 'Posunout nahoru',
+    tc_add_under_title: 'Přidat TC hned pod tento (dočasné číslo — sjednoť "Přečíslovat podle pořadí")',
     tc_move_down_title: 'Posunout dolů',
 
     /* form actions */
@@ -226,6 +235,8 @@ const I18N = {
     /* modal: about */
     about_version_label: 'Verze',
     about_ai_note: 'Tato aplikace byla vytvořena ve spolupráci s modelem <strong>Claude Sonnet 4.6</strong> od Anthropic, který se podílel na návrhu i implementaci.',
+    about_changelog_title_230: 'Verze 2.3.0',
+    about_changelog_list_230: '<li>Hromadné úpravy — Priorita, Stav a Štítky pro všechny zaškrtnuté TC najednou (nové tlačítko v záhlaví)</li><li>Nové tlačítko "+" u každého TC — přidá nový TC hned pod něj (dočasné číslo, doporučeno dořešit "Přečíslovat podle pořadí")</li><li>Opravená hrana v logice přečíslování podle pořadí (možná kolize u dvou různých dodatečně vložených TC vedle sebe)</li>',
     about_changelog_title_221: 'Verze 2.2.1',
     about_changelog_list_221: '<li>Schránka se sama zkrátí na tenký proužek u okraje a nepřekrývá zbytek aplikace — vysune se, jen když na ni najedeš myší</li><li>Tlačítko Schránka v záhlaví teď vizuálně ukazuje, jestli je zapnutá</li>',
     about_changelog_title_220: 'Verze 2.2.0',
@@ -377,6 +388,14 @@ const I18N = {
     btn_manage_tags_title: 'Manage tags (shared across all projects)',
     btn_scratchpad: 'Scratchpad',
     btn_scratchpad_title: 'Scratchpad — saved text for reuse',
+    btn_bulk_edit: 'Bulk edit',
+    btn_bulk_edit_title: 'Bulk-change Priority, Status, or Tags for checked TCs',
+    bulk_edit_title: 'Bulk edit',
+    bulk_edit_count: 'Will apply to {n} checked TCs (checkbox in the row header).',
+    bulk_no_change: '— no change —',
+    bulk_add_tag: 'Add tag',
+    bulk_remove_tag: 'Remove tag',
+    bulk_apply: 'Apply',
     scratchpad_title: 'Scratchpad',
     scratchpad_hint: 'Save text here that repeats often across TCs — copy it out any time, or paste a new value straight into a field.',
     scratchpad_add: 'Add item',
@@ -414,6 +433,7 @@ const I18N = {
     f_result_remove: 'Remove',
     tc_export_check_title: 'Include in export selection',
     tc_move_up_title: 'Move up',
+    tc_add_under_title: 'Add a TC right below this one (temporary number — clean up with "Renumber by order")',
     tc_move_down_title: 'Move down',
 
     /* form actions */
@@ -498,6 +518,8 @@ const I18N = {
     /* modal: about */
     about_version_label: 'Version',
     about_ai_note: 'This application was built in collaboration with <strong>Claude Sonnet 4.6</strong> by Anthropic, which contributed to both design and implementation.',
+    about_changelog_title_230: 'Version 2.3.0',
+    about_changelog_list_230: '<li>Bulk edit — Priority, Status, and Tags for all checked TCs at once (new button in the header)</li><li>New "+" button on each TC — adds a new TC right below it (temporary number, clean up afterward with "Renumber by order")</li><li>Fixed an edge case in the renumber-by-order logic (possible collision between two different newly-inserted TCs next to each other)</li>',
     about_changelog_title_221: 'Version 2.2.1',
     about_changelog_list_221: '<li>The Scratchpad now auto-collapses to a thin edge strip instead of covering the rest of the app — it slides out only when you hover over it</li><li>The Scratchpad button in the header now visually shows whether it is active</li>',
     about_changelog_title_220: 'Version 2.2.0',
